@@ -239,6 +239,27 @@ export default function Dashboard({ onLogout }) {
         .db-search::placeholder { color: #A88B70; }
 
         .db-topbar-actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+        .db-logout-btn-top {
+           display: flex;
+           align-items: center;
+           gap: 6px;
+           padding: 7px 14px;
+           border: 1.5px solid #E8D9C0;
+           border-radius: 7px;
+           background: #FDFAF5;
+           color: #8B3A1A;
+           font-size: 12px;
+           font-weight: 700;
+           font-family: 'Lato', sans-serif;
+           cursor: pointer;
+           transition: all 0.2s;
+           letter-spacing: 0.3px;
+        }
+        .db-logout-btn-top:hover {
+           background: #8B3A1A;
+           color: #FDFAF5;
+           border-color: #8B3A1A;
+        }
         .db-icon-btn {
           width: 34px; height: 34px;
           border-radius: 50%;
