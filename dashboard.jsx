@@ -23,7 +23,7 @@ const navItems = [
   { icon: "grid", label: "Dashboard", active: true },
   { icon: "globe", label: "Learn Kinyarwanda" },
   { icon: "book", label: "Imigani & Ibisakuzo" },
-  { icon: "cpu", label: "AI Assistant" },
+  { icon: "cpu", label: "AI Assistant", path: "/ai"},
   { icon: "flag", label: "History of Rwanda" },
   { icon: "rss", label: "Discovery Feed" },
 ];
@@ -623,11 +623,15 @@ export default function Dashboard({ onLogout }) {
 
         <nav className="db-nav">
           {navItems.map(item => (
-            <div
-              key={item.label}
-              className={`db-nav-item${activeNav === item.label ? ' active' : ''}`}
-              onClick={() => { setActiveNav(item.label); setSidebarOpen(false); }}
-            >
+  <div
+    key={item.label}
+    className={`db-nav-item${activeNav === item.label ? ' active' : ''}`}
+    onClick={() => {
+      setActiveNav(item.label);
+      setSidebarOpen(false);
+      if (item.path) navigate(item.path);
+    }}
+  >
               <IconSvg name={item.icon} size={14} color={activeNav === item.label ? '#8B3A1A' : '#A88B70'}/>
               {item.label}
             </div>
