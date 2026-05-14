@@ -1,4 +1,4 @@
-import UmucoAuth from "./UmucoCore";
+import UmucoAuth from "./UmucoAuth";
 import Dashboard from "./Dashboard";
 import { Routes, Route } from "react-router-dom";
 
