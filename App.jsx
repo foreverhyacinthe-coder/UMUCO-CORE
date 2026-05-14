@@ -1,15 +1,14 @@
 import UmucoAuth from "./UmucoCore";
-import { Routes, Route} from "react-router-dom"
-const App = ()=>{
-  return (
-    <>
+import Dashboard from "./Dashboard";
+import { Routes, Route } from "react-router-dom";
 
-      <Routes>
-        <Route path="/UmucoCore" element={<UmucoAuth/>}/>
-      </Routes>
-  
-    </>
-  )
-}
+const App = () => {
+  return (
+    <Routes>
+      <Route path="/login" element={<UmucoAuth />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
+  );
+};
 
 export default App;
