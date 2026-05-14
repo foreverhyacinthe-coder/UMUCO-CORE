@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-
 const UmucoLogo = ({ size = 44 }) => (
   <svg width={size} height={size} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M100 78 Q72 55 48 28 Q38 16 42 8 Q46 2 52 6 Q58 12 62 22 Q74 50 88 68"
@@ -52,6 +50,7 @@ const EyeOff = () => (
 );
 
 export default function UmucoAuth() {
+  const navigate = useNavigate();
   const [mode, setMode] = useState("login");
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
@@ -473,7 +472,7 @@ export default function UmucoAuth() {
               </label>
             )}
 
-            <button className="uc-submit">
+            <button className="uc-submit" onClick={() => navigate("/dashboard")}>
               {mode === 'login' ? 'Sign In / Injira →' : 'Create Account / Iyandikishe →'}
             </button>
 
