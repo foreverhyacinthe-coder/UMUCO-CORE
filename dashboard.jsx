@@ -673,7 +673,7 @@ export default function Dashboard({ onLogout }) {
             <button className="db-icon-btn">
               <IconSvg name="settings" size={16}/>
             </button>
-            <div className="db-avatar" onClick={() => navigate("/login")} title="Click to logout">MN</div>
+            
             <div className="db-avatar" title="Profile">MN</div>
      <button className="db-logout-btn-top" onClick={() => navigate("/login")}>
            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
