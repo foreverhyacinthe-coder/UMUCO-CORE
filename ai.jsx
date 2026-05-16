@@ -9,11 +9,35 @@ const SUGGESTED_PROMPTS = [
 ];
 
 const HISTORY = [
-  { id: 1, label: "Gihanga and the Cows", time: "2 hours ago", icon: "🐄", group: "TODAY" },
+  {
+    id: 1,
+    label: "Gihanga and the Cows",
+    time: "2 hours ago",
+    icon: "🐄",
+    group: "TODAY",
+  },
   { id: 2, label: "Wedding Traditions", time: "", icon: "💍", group: "TODAY" },
-  { id: 3, label: "Simple Greetings", time: "", icon: "👋", group: "YESTERDAY" },
-  { id: 4, label: "Imigongo Art Form", time: "", icon: "🎨", group: "YESTERDAY" },
-  { id: 5, label: "Musinga's Legacy", time: "", icon: "👑", group: "YESTERDAY" },
+  {
+    id: 3,
+    label: "Simple Greetings",
+    time: "",
+    icon: "👋",
+    group: "YESTERDAY",
+  },
+  {
+    id: 4,
+    label: "Imigongo Art Form",
+    time: "",
+    icon: "🎨",
+    group: "YESTERDAY",
+  },
+  {
+    id: 5,
+    label: "Musinga's Legacy",
+    time: "",
+    icon: "👑",
+    group: "YESTERDAY",
+  },
 ];
 
 const INITIAL_MESSAGES = [
@@ -32,7 +56,7 @@ const INITIAL_MESSAGES = [
   {
     id: 3,
     role: "assistant",
-    text: "Ah, Gihanga Ngomijana, the legendary first King of Rwanda! Tradition says he descended from heaven to unify the clans. He is celebrated as the great architect of our culture, credited with introducing fire, the arts of ironworking, and the sacred relationship with cattle (Inyambo).\n\nHe founded the royal lineage that would shape Rwanda for centuries, and his name — Gihanga — literally means \"the creator\" or \"the founder.\" Many oral traditions describe him as a figure of immense wisdom and divine favor.",
+    text: 'Ah, Gihanga Ngomijana, the legendary first King of Rwanda! Tradition says he descended from heaven to unify the clans. He is celebrated as the great architect of our culture, credited with introducing fire, the arts of ironworking, and the sacred relationship with cattle (Inyambo).\n\nHe founded the royal lineage that would shape Rwanda for centuries, and his name — Gihanga — literally means "the creator" or "the founder." Many oral traditions describe him as a figure of immense wisdom and divine favor.',
     time: "11:02 AM",
   },
 ];
@@ -60,7 +84,10 @@ export default function AiPage() {
       id: Date.now(),
       role: "user",
       text: userText,
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     };
     setMessages((prev) => [...prev, userMsg]);
     setIsTyping(true);
@@ -80,7 +107,8 @@ export default function AiPage() {
 
       const data = await response.json();
       const replyText =
-        data?.content?.[0]?.text || "Mbabarira — I couldn't find an answer right now. Please try again.";
+        data?.content?.[0]?.text ||
+        "Mbabarira — I couldn't find an answer right now. Please try again.";
 
       setIsTyping(false);
       setMessages((prev) => [
@@ -89,7 +117,10 @@ export default function AiPage() {
           id: Date.now() + 1,
           role: "assistant",
           text: replyText,
-          time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          time: new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
         },
       ]);
     } catch {
@@ -100,7 +131,10 @@ export default function AiPage() {
           id: Date.now() + 1,
           role: "assistant",
           text: "Mbabarira — something went wrong. Please try again.",
-          time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          time: new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
         },
       ]);
     }
@@ -122,7 +156,14 @@ export default function AiPage() {
   return (
     <div style={styles.root}>
       {/* Sidebar */}
-      <aside style={{ ...styles.sidebar, width: sidebarOpen ? 220 : 0, overflow: "hidden", transition: "width 0.3s" }}>
+      <aside
+        style={{
+          ...styles.sidebar,
+          width: sidebarOpen ? 220 : 0,
+          overflow: "hidden",
+          transition: "width 0.3s",
+        }}
+      >
         <div style={styles.sidebarInner}>
           {/* Logo */}
           <div style={styles.logo}>
@@ -145,15 +186,21 @@ export default function AiPage() {
                     key={item.id}
                     style={{
                       ...styles.historyItem,
-                      background: activeHistory === item.id ? "#7a1a1a22" : "transparent",
-                      borderLeft: activeHistory === item.id ? "3px solid #8B1A1A" : "3px solid transparent",
+                      background:
+                        activeHistory === item.id ? "#7a1a1a22" : "transparent",
+                      borderLeft:
+                        activeHistory === item.id
+                          ? "3px solid #8B1A1A"
+                          : "3px solid transparent",
                     }}
                     onClick={() => setActiveHistory(item.id)}
                   >
                     <span style={styles.historyIcon}>{item.icon}</span>
                     <div style={styles.historyText}>
                       <span style={styles.historyLabel}>{item.label}</span>
-                      {item.time && <span style={styles.historyTime}>{item.time}</span>}
+                      {item.time && (
+                        <span style={styles.historyTime}>{item.time}</span>
+                      )}
                     </div>
                   </button>
                 ))}
@@ -162,7 +209,10 @@ export default function AiPage() {
           </div>
 
           {/* New Story */}
-          <button style={styles.newStoryBtn} onClick={() => setMessages([INITIAL_MESSAGES[0]])}>
+          <button
+            style={styles.newStoryBtn}
+            onClick={() => setMessages([INITIAL_MESSAGES[0]])}
+          >
             <span>✦</span> Start New Story
           </button>
         </div>
@@ -173,14 +223,40 @@ export default function AiPage() {
         {/* Top bar */}
         <header style={styles.header}>
           <div style={styles.headerLeft}>
-            <button style={styles.backBtn} onClick={() => navigate("/dashboard")} title="Back to Dashboard">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <button
+              style={styles.backBtn}
+              onClick={() => navigate("/dashboard")}
+              title="Back to Dashboard"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M19 12H5M12 5l-7 7 7 7" />
               </svg>
               <span>Dashboard</span>
             </button>
-            <button style={styles.sidebarToggle} onClick={() => setSidebarOpen((o) => !o)} title="Toggle sidebar">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <button
+              style={styles.sidebarToggle}
+              onClick={() => setSidebarOpen((o) => !o)}
+              title="Toggle sidebar"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <line x1="3" y1="12" x2="21" y2="12" />
                 <line x1="3" y1="18" x2="21" y2="18" />
@@ -195,31 +271,72 @@ export default function AiPage() {
             </div>
             <div>
               <div style={styles.assistantName}>Umuco Assistant</div>
-              <div style={styles.assistantSub}>Conversation Started: Rwanda Heritage</div>
+              <div style={styles.assistantSub}>
+                Conversation Started: Rwanda Heritage
+              </div>
             </div>
           </div>
 
           {/* Right icons */}
           <div style={styles.headerRight}>
             <button style={styles.iconBtn} title="Share">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
               </svg>
             </button>
             <button style={styles.iconBtn} title="Bookmark">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
               </svg>
             </button>
             <button style={styles.iconBtn} title="Notifications">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                 <path d="M13.73 21a2 2 0 0 1-3.46 0" />
               </svg>
             </button>
             <button style={styles.iconBtn} title="Settings">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <circle cx="12" cy="12" r="3" />
                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
               </svg>
@@ -233,28 +350,59 @@ export default function AiPage() {
         {/* Messages */}
         <div style={styles.messagesArea}>
           {messages.map((msg) => (
-            <div key={msg.id} style={{ ...styles.msgRow, justifyContent: msg.role === "user" ? "flex-end" : "flex-start" }}>
+            <div
+              key={msg.id}
+              style={{
+                ...styles.msgRow,
+                justifyContent: msg.role === "user" ? "flex-end" : "flex-start",
+              }}
+            >
               {msg.role === "assistant" && (
-                <div style={styles.msgAvatar}><span style={{ fontSize: 14 }}>✦</span></div>
+                <div style={styles.msgAvatar}>
+                  <span style={{ fontSize: 14 }}>✦</span>
+                </div>
               )}
-              <div style={msg.role === "user" ? styles.userBubble : styles.aiBubble}>
+              <div
+                style={
+                  msg.role === "user" ? styles.userBubble : styles.aiBubble
+                }
+              >
                 {msg.text.split("\n").map((line, i) =>
-                  line ? <p key={i} style={{ margin: "0 0 6px" }}>{line}</p> : <br key={i} />
+                  line ? (
+                    <p key={i} style={{ margin: "0 0 6px" }}>
+                      {line}
+                    </p>
+                  ) : (
+                    <br key={i} />
+                  ),
                 )}
-                <div style={{ ...styles.msgTime, textAlign: msg.role === "user" ? "right" : "left", color: msg.role === "user" ? "rgba(255,255,255,0.6)" : "#aaa" }}>
+                <div
+                  style={{
+                    ...styles.msgTime,
+                    textAlign: msg.role === "user" ? "right" : "left",
+                    color:
+                      msg.role === "user" ? "rgba(255,255,255,0.6)" : "#aaa",
+                  }}
+                >
                   {msg.time}
-                  {msg.role === "assistant" && <span style={{ marginLeft: 4 }}>↩</span>}
+                  {msg.role === "assistant" && (
+                    <span style={{ marginLeft: 4 }}>↩</span>
+                  )}
                 </div>
               </div>
               {msg.role === "user" && (
-                <div style={styles.userAvatar}><span style={{ fontSize: 14 }}>👤</span></div>
+                <div style={styles.userAvatar}>
+                  <span style={{ fontSize: 14 }}>👤</span>
+                </div>
               )}
             </div>
           ))}
 
           {isTyping && (
             <div style={{ ...styles.msgRow, justifyContent: "flex-start" }}>
-              <div style={styles.msgAvatar}><span style={{ fontSize: 14 }}>✦</span></div>
+              <div style={styles.msgAvatar}>
+                <span style={{ fontSize: 14 }}>✦</span>
+              </div>
               <div style={styles.aiBubble}>
                 <div style={styles.typingDots}>
                   <span style={{ ...styles.dot, animationDelay: "0s" }} />
@@ -270,7 +418,11 @@ export default function AiPage() {
         {/* Suggested prompts */}
         <div style={styles.suggestions}>
           {SUGGESTED_PROMPTS.map((p) => (
-            <button key={p.label} style={styles.suggestion} onClick={() => sendMessage(p.label)}>
+            <button
+              key={p.label}
+              style={styles.suggestion}
+              onClick={() => sendMessage(p.label)}
+            >
               <span>{p.icon}</span> {p.label}
             </button>
           ))}
@@ -279,7 +431,16 @@ export default function AiPage() {
         {/* Input */}
         <div style={styles.inputArea}>
           <button style={styles.micBtn} title="Voice input">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
               <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
               <line x1="12" y1="19" x2="12" y2="23" />
@@ -295,12 +456,34 @@ export default function AiPage() {
             onKeyDown={handleKeyDown}
           />
           <button style={styles.attachBtn} title="Attach file">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
             </svg>
           </button>
-          <button style={styles.sendBtn} onClick={() => sendMessage()} title="Send">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <button
+            style={styles.sendBtn}
+            onClick={() => sendMessage()}
+            title="Send"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <line x1="22" y1="2" x2="11" y2="13" />
               <polygon points="22 2 15 22 11 13 2 9 22 2" />
             </svg>
@@ -308,7 +491,8 @@ export default function AiPage() {
         </div>
 
         <div style={styles.disclaimer}>
-          Umuco AI Assistant can provide insights into traditional history, but always verify oral lineage with local elders.
+          Umuco AI Assistant can provide insights into traditional history, but
+          always verify oral lineage with local elders.
         </div>
       </main>
 
